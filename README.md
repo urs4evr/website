@@ -17,7 +17,7 @@ The website auto-deploys to GitHub Pages when you push to the main branch, thank
 
 1. Push any changes to main:
    ```bash
-   git add website/
+   git add public/
    git commit -m "Update website"
    git push origin main
    ```
@@ -37,7 +37,7 @@ If you prefer to deploy manually:
 npm run deploy:website:manual
 ```
 
-This will deploy the website folder to the `gh-pages` branch.
+This will deploy the public folder to the `gh-pages` branch.
 
 ## Setup GitHub Pages
 
