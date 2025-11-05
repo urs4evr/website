@@ -7,7 +7,7 @@ This directory contains the website files for LoveKeeper, hosted on GitHub Pages
 - **index.html** - Landing page with app features and download links
 - **privacy.html** - Privacy Policy (REQUIRED for app store submission)
 - **terms.html** - Terms of Service (REQUIRED for iOS, RECOMMENDED for Android)
-- **support.html** - Support page with FAQ and contact information
+- **support.html** - Support page with FAQ and contact information.
 
 ## Deployment
 
