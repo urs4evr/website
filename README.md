@@ -53,10 +53,8 @@ This will deploy the public folder to the `gh-pages` branch.
 
 ### Update Contact Emails
 
-Search and replace in all HTML files:
-- `support@lovekeeper.app` → your actual support email
-- `privacy@lovekeeper.app` → your actual privacy email
-- `legal@lovekeeper.app` → your actual legal email
+All contact emails have been set to:
+- `support@lovekeeper.app` - All inquiries (support, privacy, legal)
 
 ### Update Privacy Policy
 
