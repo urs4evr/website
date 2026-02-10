@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Top 15 romantic Valentine's Day gift ideas for couples. Curated gifts from $10-$80 that spark romance, joy, and lasting memories.">
+    <meta name="description" content="Top 12 romantic Valentine's Day gift ideas for couples. Curated gifts from $10-$80 that spark romance, joy, and lasting memories.">
     <meta name="keywords" content="valentine's day gifts, romantic gifts, couples gifts, anniversary gifts, gift ideas for her, gift ideas for him">
-    <meta property="og:title" content="Top 15 Romantic Valentine's Day Gift Ideas For Couples">
+    <meta property="og:title" content="Top 12 Romantic Valentine's Day Gift Ideas For Couples">
     <meta property="og:description" content="Hand-picked romantic gifts for couples — from spa sets to date night games. All available on Amazon.">
     <meta property="og:type" content="article">
     <link rel="icon" type="image/png" href="../logo.png">
-    <title>Top 15 Romantic Valentine's Day Gift Ideas For Couples (2026) | LoveKeeper Blog</title>
+    <title>Top 12 Romantic Valentine's Day Gift Ideas For Couples (2026) | LoveKeeper Blog</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-514653192"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -17,10 +17,193 @@
         gtag('js', new Date());
         gtag('config', 'G-514653192');
     </script>
+    <!-- Amplitude Analytics -->
+    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.0-min.js.gz"></script>
+    <script>
+        window.amplitudeInstance = amplitude.createInstance();
+        window.amplitudeInstance.init('0e4516a34f8eee8212284227f964244', {
+            defaultTracking: { pageViews: true, sessions: true }
+        });
+        window.amplitudeInstance.track('blog_page_view', {
+            page: 'valentines-day-gift-ideas',
+            referrer: document.referrer || 'direct',
+            url: window.location.href
+        });
+        // Enhanced tracking functions with error handling
+        function safeTrack(eventName, properties) {
+            try {
+                if (window.amplitudeInstance && window.amplitudeInstance.track) {
+                    window.amplitudeInstance.track(eventName, properties);
+                    console.log(`✅ Tracked: ${eventName}`, properties);
+                } else {
+                    console.warn(`⚠️ Amplitude not available for event: ${eventName}`);
+                }
+            } catch (error) {
+                console.error(`❌ Failed to track ${eventName}:`, error);
+            }
+        }
+
+        function trackProductClick(productName, productRank, price) {
+            safeTrack('product_click', {
+                page: 'valentines-day-gift-ideas',
+                product_name: productName,
+                product_rank: productRank,
+                price: price,
+                referrer: document.referrer || 'direct'
+            });
+        }
+        
+        function trackCTAClick(ctaType) {
+            safeTrack('cta_click', {
+                page: 'valentines-day-gift-ideas',
+                cta_type: ctaType
+            });
+        }
+
+        function trackProductView(productName, productRank, price) {
+            safeTrack('product_view', {
+                page: 'valentines-day-gift-ideas',
+                product_name: productName,
+                product_rank: productRank,
+                price: price,
+                referrer: document.referrer || 'direct'
+            });
+        }
+
+        // Scroll tracking for engagement
+        let scrollDepthTracked = { 25: false, 50: false, 75: false, 90: false };
+        let maxScrollDepth = 0;
+        
+        function trackScrollDepth() {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const scrollPercentage = Math.round((scrollPosition / scrollHeight) * 100);
+            
+            // Update max scroll depth
+            if (scrollPercentage > maxScrollDepth) {
+                maxScrollDepth = scrollPercentage;
+            }
+            
+            // Track milestones
+            [25, 50, 75, 90].forEach(milestone => {
+                if (scrollPercentage >= milestone && !scrollDepthTracked[milestone]) {
+                    scrollDepthTracked[milestone] = true;
+                    safeTrack('scroll_depth', {
+                        page: 'valentines-day-gift-ideas',
+                        scroll_percentage: milestone,
+                        max_scroll_depth: maxScrollDepth,
+                        referrer: document.referrer || 'direct'
+                    });
+                }
+            });
+        }
+
+        // Time on page tracking
+        let pageStartTime = Date.now();
+        let timeOnPageTracked = false;
+        
+        function trackTimeOnPage() {
+            if (timeOnPageTracked) return;
+            
+            const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
+            timeOnPageTracked = true;
+            
+            safeTrack('time_on_page', {
+                page: 'valentines-day-gift-ideas',
+                time_spent_seconds: timeSpent,
+                max_scroll_depth: maxScrollDepth,
+                referrer: document.referrer || 'direct'
+            });
+        }
+
+        // Intersection Observer for product visibility
+        function setupProductVisibilityTracking() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 // Track when 50% of product is visible
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const productCard = entry.target;
+                        const productId = productCard.id;
+                        const productRank = parseInt(productId.replace('product-', ''));
+                        
+                        // Get product details from the card
+                        const productName = productCard.querySelector('h3 a')?.textContent?.trim() || '';
+                        const priceText = productCard.querySelector('.price')?.textContent || '';
+                        const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+                        
+                        if (productName && !productCard.dataset.viewTracked) {
+                            productCard.dataset.viewTracked = 'true';
+                            trackProductView(productName, productRank, price);
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Initialize tracking when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup scroll tracking
+            let scrollTimer;
+            window.addEventListener('scroll', function() {
+                if (scrollTimer) clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(trackScrollDepth, 100);
+            });
+            
+            // Setup product visibility tracking
+            setupProductVisibilityTracking();
+            
+            // Make product images clickable
+            document.querySelectorAll('.product-image').forEach(imageContainer => {
+                imageContainer.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const productRank = parseInt(productCard.id.replace('product-', ''));
+                    const productName = productCard.querySelector('h3 a')?.textContent?.trim() || '';
+                    const priceText = productCard.querySelector('.price')?.textContent || '';
+                    const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+                    const amazonLink = productCard.querySelector('h3 a')?.href || productCard.querySelector('.shop-btn')?.href || '';
+                    
+                    // Track the click
+                    trackProductClick(productName, productRank, price);
+                    
+                    // Open Amazon link in new tab
+                    if (amazonLink) {
+                        window.open(amazonLink, '_blank', 'noopener,noreferrer');
+                    }
+                });
+            });
+            
+            // Track time on page when user leaves
+            window.addEventListener('beforeunload', trackTimeOnPage);
+            window.addEventListener('pagehide', trackTimeOnPage);
+            
+            // Also track time on page for tab switching
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    trackTimeOnPage();
+                }
+            });
+        });
+    </script>
     <link rel="stylesheet" href="article-styles.css">
     <style>
         .product-image {
             height: 320px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         .product-image img {
             width: 100%;
@@ -44,9 +227,6 @@
         .grad-10 { background: linear-gradient(135deg, #FFFBEB, #FDE68A); }
         .grad-11 { background: linear-gradient(135deg, #FFF7ED, #FFEDD5); }
         .grad-12 { background: linear-gradient(135deg, #FFF1F2, #FFE4E6); }
-        .grad-13 { background: linear-gradient(135deg, #FEFCE8, #FEF3C7); }
-        .grad-14 { background: linear-gradient(135deg, #FDF4FF, #FAE8FF); }
-        .grad-15 { background: linear-gradient(135deg, #FFF5F5, #FEE2E2); }
         .article-hero {
             padding: 60px 24px 40px;
         }
@@ -58,23 +238,23 @@
 <body>
     <nav class="nav">
         <a class="nav-logo" href="../index.html"><img src="../logo.png" alt="LoveKeeper"> LoveKeeper</a>
-        <a href="index.html">← Blog</a>
+        <a href="index.html">Blog</a>
     </nav>
 
     <header class="article-hero">
-        <div class="hero-badge">💝 GIFT GUIDE 2026</div>
-        <h1>Top 15 Romantic Valentine's Day Gift Ideas</h1>
-        <p class="subtitle">Hand-Picked Gifts for Couples — From $10 to $80</p>
+        <div class="hero-badge">GIFT GUIDE 2026</div>
+        <h1>Top 12 Romantic Valentine's Day Gift Ideas</h1>
+        <p class="subtitle">Hand-Picked Gifts for Couples -- From $10 to $80</p>
     </header>
 
     <main class="content">
         <div class="intro">
-            <p><strong>Looking for the perfect Valentine's Day gift?</strong> We've hand-picked 15 romantic, thoughtful gifts available on Amazon — from relaxing spa sets to fun couple's games. Something for every budget and every love language.</p>
+            <p><strong>Looking for the perfect Valentine's Day gift?</strong> We've hand-picked 12 romantic, thoughtful gifts available on Amazon -- from relaxing spa sets to fun couple's games. Something for every budget and every love language.</p>
         </div>
 
         <!-- PRODUCTS START -->
 
-        <!-- Product 1 -->
+        <!-- Product 1: Relaxation Gift Set -->
         <div class="product-card" id="product-1">
             <div class="product-image grad-1">
                 <span class="rank">#1</span>
@@ -82,325 +262,259 @@
                 <img src="https://m.media-amazon.com/images/I/71I+4GIAWqL.jpg" alt="Ultimate Relaxation Gift Set for Her">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/Birthday-Grandma-Coworker-Relaxing-Valentines/dp/B0DBVJWDNL" target="_blank" rel="noopener noreferrer">Ultimate Relaxation Gift Set for Her</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B0DBVJWDNL?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Relaxation Gift Set', 1, 39.99)">Ultimate Relaxation Gift Set for Her</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.7 · Popular</span></span>
+                    <span class="stars">4.7 -- Popular</span>
                     <span class="price">$39.99</span>
                 </div>
-                <p class="desc">A complete spa experience at home — bath bombs, scented candles, nourishing lotions, and more, all wrapped in a beautiful gift-ready package. <strong>Perfect for pampering</strong> your partner after a long week, turning any bathroom into a personal retreat.</p>
+                <p class="desc">A complete spa experience at home -- bath bombs, scented candles, nourishing lotions, and more, all wrapped in a beautiful gift-ready package. <strong>Perfect for pampering</strong> your partner after a long week, turning any bathroom into a personal retreat.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>Everything she needs for a truly relaxing evening in one beautifully curated set. No wrapping required — it arrives gift-ready out of the box, so you can hand it over with confidence and watch her light up.</p>
+                    <p>Everything she needs for a truly relaxing evening in one beautifully curated set. No wrapping required -- it arrives gift-ready out of the box, so you can hand it over with confidence and watch her light up.</p>
                 </div>
-                <a href="https://www.amazon.com/Birthday-Grandma-Coworker-Relaxing-Valentines/dp/B0DBVJWDNL" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B0DBVJWDNL?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Relaxation Gift Set', 1, 39.99)">Shop on Amazon</a>
             </div>
         </div>
 
-        <!-- Product 2 -->
+        <!-- Product 2: Hand Casting Kit -->
         <div class="product-card" id="product-2">
             <div class="product-image grad-2">
                 <span class="rank">#2</span>
-                <span class="cat-tag">Jewelry + Rose</span>
-                <img src="https://m.media-amazon.com/images/I/812mPjw89NL.jpg" alt="Eternal Rose & Heart Necklace Set">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/Lebana-Girlfriend-Valentines-Anniversary-Romantic-Red/dp/B0CCFYRH46" target="_blank" rel="noopener noreferrer">Eternal Rose & Heart Necklace Set</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.6 · Bestseller</span></span>
-                    <span class="price">$59.99</span>
-                </div>
-                <p class="desc">A preserved real rose paired with a <strong>heart crystal necklace</strong> in an elegant velvet-lined gift box. Two gifts in one — a rose that lasts forever without water and a piece of jewelry she'll reach for every morning.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>The ultimate romantic combo that covers all bases. The rose never wilts, the necklace is a daily reminder of your love, and the luxurious presentation means you don't need to worry about gift wrapping. It simply looks and feels expensive.</p>
-                </div>
-                <a href="https://www.amazon.com/Lebana-Girlfriend-Valentines-Anniversary-Romantic-Red/dp/B0CCFYRH46" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 3 -->
-        <div class="product-card" id="product-3">
-            <div class="product-image grad-3">
-                <span class="rank">#3</span>
                 <span class="cat-tag">Experience + Keepsake</span>
                 <img src="https://m.media-amazon.com/images/I/81dkBxdlmOL.jpg" alt="Luna Bean DIY Hand Casting Kit">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/Luna-Bean-KEEPSAKE-Plaster-Materials/dp/B01E4LWBLQ" target="_blank" rel="noopener noreferrer">Luna Bean DIY Hand Casting Kit</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B01E4LWBLQ?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Hand Casting Kit', 2, 29.33)">Luna Bean DIY Hand Casting Kit</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.6 · 40,000+ reviews</span></span>
+                    <span class="stars">4.6 -- 40,000+ reviews</span>
                     <span class="price">$29.33</span>
                 </div>
-                <p class="desc">Create a <strong>permanent plaster sculpture</strong> of your intertwined hands together. The kit includes everything you need — molding powder, casting stone, and step-by-step instructions. No artistic skills required.</p>
+                <p class="desc">Create a <strong>permanent plaster sculpture</strong> of your intertwined hands together. The kit includes everything you need -- molding powder, casting stone, and step-by-step instructions. No artistic skills required.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>The process itself becomes a memorable date night activity, and the finished sculpture is a one-of-a-kind keepsake you'll display for years. Nearly 40K ratings with 79% five-star reviews speak for themselves — this one is a crowd favorite.</p>
+                    <p>The process itself becomes a memorable date night activity, and the finished sculpture is a one-of-a-kind keepsake you'll display for years. Nearly 40K ratings with 79% five-star reviews speak for themselves.</p>
                 </div>
-                <a href="https://www.amazon.com/Luna-Bean-KEEPSAKE-Plaster-Materials/dp/B01E4LWBLQ" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B01E4LWBLQ?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Hand Casting Kit', 2, 29.33)">Shop on Amazon</a>
             </div>
         </div>
 
-        <!-- Product 4 -->
-        <div class="product-card" id="product-4">
-            <div class="product-image grad-4">
-                <span class="rank">#4</span>
-                <span class="cat-tag">Date Nights</span>
-                <img src="https://m.media-amazon.com/images/I/71zz3xuK7PL.jpg" alt="40 Creative Date Night Idea Cards">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/Its-Date-Girlfriend-Boyfriend-Anniversaries/dp/B0BRNZ6FSW" target="_blank" rel="noopener noreferrer">40 Creative Date Night Idea Cards</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.7 · Popular</span></span>
-                    <span class="price">$15.99</span>
-                </div>
-                <p class="desc"><strong>40 unique date ideas</strong> on beautifully designed cards, ranging from adventurous outings to cozy nights in. Each card includes everything you need to plan the date — so you'll never run out of creative things to do together.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>One gift that keeps giving for months. Whenever you're stuck in the "what should we do tonight?" loop, just pull a card. It's fun, easy, affordable, and solves the eternal date-planning problem in the most charming way.</p>
-                </div>
-                <a href="https://www.amazon.com/Its-Date-Girlfriend-Boyfriend-Anniversaries/dp/B0BRNZ6FSW" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 5 -->
-        <div class="product-card" id="product-5">
-            <div class="product-image grad-5">
-                <span class="rank">#5</span>
-                <span class="cat-tag">Faith + Love</span>
-                <img src="https://m.media-amazon.com/images/I/81G7448o6JL.jpg" alt="Handmade Bible Verse Emotion Jar">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/Bible-Emotions-Feelings-Christian-Graduation/dp/B0D3VBVGG7" target="_blank" rel="noopener noreferrer">Handmade Bible Verse Emotion Jar</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.8 · Popular</span></span>
-                    <span class="price">$9.98</span>
-                </div>
-                <p class="desc">A charming jar filled with <strong>handmade Bible verse scrolls</strong>, each matched to a different emotion or life situation. Pull one whenever you need encouragement, comfort, or a moment of gratitude together as a couple.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>Deeply meaningful, personal, and under $10 — which makes it one of the best value picks on this list. Perfect for faith-driven couples who want to start or end each day with shared inspiration and a quiet moment of connection.</p>
-                </div>
-                <a href="https://www.amazon.com/Bible-Emotions-Feelings-Christian-Graduation/dp/B0D3VBVGG7" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 6 -->
-        <div class="product-card" id="product-6">
-            <div class="product-image grad-6">
-                <span class="rank">#6</span>
+        <!-- Product 3: Forever Roses Box -->
+        <div class="product-card" id="product-3">
+            <div class="product-image grad-3">
+                <span class="rank">#3</span>
                 <span class="cat-tag">Forever Flowers</span>
                 <img src="https://m.media-amazon.com/images/I/81bHitaEdvL.jpg" alt="Luxury Forever Roses Gift Box">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/GLAMOUR-BOUTIQUE-16-Piece-Forever-Flowers/dp/B0BBBG4QMF" target="_blank" rel="noopener noreferrer">Luxury Forever Roses Gift Box</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B0BBBG4QMF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Forever Roses Box', 3, 39.95)">Luxury Forever Roses Gift Box</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.5 · Popular</span></span>
+                    <span class="stars">4.5 -- Popular</span>
                     <span class="price">$39.95</span>
                 </div>
-                <p class="desc"><strong>16 preserved real roses</strong> arranged in a luxury gift box. These aren't artificial — they're real roses that have been specially treated to last for years without water or sunlight, making them a stunning permanent display piece.</p>
+                <p class="desc"><strong>16 preserved real roses</strong> arranged in a luxury gift box. These aren't artificial -- they're real roses that have been specially treated to last for years without water or sunlight, making them a stunning permanent display piece.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>Real roses that never die — it doesn't get more romantic than that. The elegant box makes it instantly gift-ready, and they look absolutely gorgeous on a shelf, vanity, or nightstand. A statement piece she'll admire every day.</p>
+                    <p>Real roses that never die -- it doesn't get more romantic than that. The elegant box makes it instantly gift-ready, and they look absolutely gorgeous on a shelf, vanity, or nightstand.</p>
                 </div>
-                <a href="https://www.amazon.com/GLAMOUR-BOUTIQUE-16-Piece-Forever-Flowers/dp/B0BBBG4QMF" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B0BBBG4QMF?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Forever Roses Box', 3, 39.95)">Shop on Amazon</a>
             </div>
         </div>
 
-        <!-- Product 7 -->
-        <div class="product-card" id="product-7">
-            <div class="product-image grad-7">
-                <span class="rank">#7</span>
-                <span class="cat-tag">Gourmet</span>
-                <img src="https://m.media-amazon.com/images/I/81SIblapKML.jpg" alt="Gourmet Roasted Nut Gift Basket">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/NUT-CRAVINGS-Gourmet-Collection-Appreciation/dp/B092B9494S" target="_blank" rel="noopener noreferrer">Gourmet Roasted Nut Gift Basket</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.6 · Popular</span></span>
-                    <span class="price">$34.97</span>
-                </div>
-                <p class="desc">A <strong>heart-shaped gift tray</strong> filled with premium roasted nuts in multiple gourmet varieties. Beautifully arranged and ready to serve — ideal for snacking and sharing on your special evening together.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>The heart shape makes it instantly romantic, and the quality of the nuts is genuinely impressive. Great for couples who love snacking together — pair it with a bottle of wine or set it out for a cozy movie night at home.</p>
-                </div>
-                <a href="https://www.amazon.com/NUT-CRAVINGS-Gourmet-Collection-Appreciation/dp/B092B9494S" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 8 -->
-        <div class="product-card" id="product-8">
-            <div class="product-image grad-8">
-                <span class="rank">#8</span>
-                <span class="cat-tag">Jewelry</span>
-                <img src="https://m.media-amazon.com/images/I/613e-bIoE7L.jpg" alt="Elegant Moissanite Heart Necklace">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/dp/B0CK7287CC?th=1&psc=1" target="_blank" rel="noopener noreferrer">Elegant Moissanite Heart Necklace</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.7 · Popular</span></span>
-                    <span class="price">$79.99</span>
-                </div>
-                <p class="desc">A stunning <strong>moissanite heart pendant</strong> that catches the light like a real diamond. Elegant, timeless design on a delicate chain — the kind of piece that works with everything from casual outfits to evening wear.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>Moissanite offers diamond-level brilliance at a fraction of the cost, so you get maximum sparkle without the luxury price tag. This is a piece she'll genuinely treasure and reach for every single day — not just on special occasions.</p>
-                </div>
-                <a href="https://www.amazon.com/dp/B0CK7287CC?th=1&psc=1" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 9 -->
-        <div class="product-card" id="product-9">
-            <div class="product-image grad-9">
-                <span class="rank">#9</span>
-                <span class="cat-tag">Spa & Wellness</span>
-                <img src="https://m.media-amazon.com/images/I/81bfbN1USPL.jpg" alt="Vanilla & Coconut Spa Gift Basket">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/Vanilla-Coconut-Fragrant-Lotions-Luxurious/dp/B07GBFT6Z3" target="_blank" rel="noopener noreferrer">Vanilla & Coconut Spa Gift Basket</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.5 · Popular</span></span>
-                    <span class="price">$37.98</span>
-                </div>
-                <p class="desc">A luxurious spa basket loaded with <strong>vanilla & coconut scented</strong> lotions, bath bombs, shower gel, and body care essentials. Everything is beautifully arranged in a reusable basket — relaxation, delivered.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>The warm vanilla-coconut scent is universally loved and instantly calming. It's a thoughtful, indulgent way to say "you deserve to relax" — and the reusable basket adds lasting value beyond the products themselves.</p>
-                </div>
-                <a href="https://www.amazon.com/Vanilla-Coconut-Fragrant-Lotions-Luxurious/dp/B07GBFT6Z3" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 10 -->
-        <div class="product-card" id="product-10">
-            <div class="product-image grad-10">
-                <span class="rank">#10</span>
+        <!-- Product 4: Adventure Scrapbook -->
+        <div class="product-card" id="product-4">
+            <div class="product-image grad-4">
+                <span class="rank">#4</span>
                 <span class="cat-tag">Memories</span>
                 <img src="https://m.media-amazon.com/images/I/916M9ABLibL.jpg" alt="Our Adventure DIY Scrapbook Album">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/JIMBON-Adventure-Scrapbook-Guestbook-Anniversary/dp/B091YKMS28" target="_blank" rel="noopener noreferrer">"Our Adventure" DIY Scrapbook Album</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B091YKMS28?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Adventure Scrapbook', 4, 25.99)">"Our Adventure" DIY Scrapbook Album</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.7 · Bestseller</span></span>
+                    <span class="stars">4.7 -- Bestseller</span>
                     <span class="price">$25.99</span>
                 </div>
                 <p class="desc">An <strong>"Up"-inspired adventure scrapbook</strong> to fill with your favorite photos, ticket stubs, and memories. Comes with decorating accessories like stickers, photo corners, and a pen to get you started right away.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>Creating it together is half the fun — it turns into a shared project you build over months and years. A beautiful, tangible way to preserve your best moments, and it only gets more meaningful and valuable over time.</p>
+                    <p>Creating it together is half the fun -- it turns into a shared project you build over months and years. A beautiful, tangible way to preserve your best moments, and it only gets more meaningful over time.</p>
                 </div>
-                <a href="https://www.amazon.com/JIMBON-Adventure-Scrapbook-Guestbook-Anniversary/dp/B091YKMS28" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B091YKMS28?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Adventure Scrapbook', 4, 25.99)">Shop on Amazon</a>
             </div>
         </div>
 
-        <!-- Product 11 -->
-        <div class="product-card" id="product-11">
-            <div class="product-image grad-11">
-                <span class="rank">#11</span>
-                <span class="cat-tag">Gourmet Treats</span>
-                <img src="https://m.media-amazon.com/images/I/81cjOG5uDEL.jpg" alt="Barnett's Chocolate Biscotti Sampler">
+        <!-- Product 5: Biscotti Box 20ct -->
+        <div class="product-card" id="product-5">
+            <div class="product-image grad-5">
+                <span class="rank">#5</span>
+                <span class="cat-tag">Gourmet</span>
+                <img src="https://m.media-amazon.com/images/I/81c+p7TWhNL.jpg" alt="Premium Gourmet Chocolate Biscotti Box">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/Biscotti-Barnetts-Corporate-Mishloach-Assorted/dp/B0081BE3E4" target="_blank" rel="noopener noreferrer">Barnett's Chocolate Biscotti Sampler (12ct)</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B006J7TAHM?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Biscotti Box 20ct', 5, 25.99)">Premium Gourmet Chocolate Biscotti Box (20ct)</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.5 · Popular</span></span>
-                    <span class="price">$14.99</span>
+                    <span class="stars">4.6 -- Popular</span>
+                    <span class="price">$25.99</span>
                 </div>
-                <p class="desc"><strong>12 gourmet chocolate biscotti</strong> in assorted flavors, each individually wrapped for freshness. Kosher certified, non-dairy, and presented in a beautiful gift box — ready to hand over without any extra wrapping.</p>
+                <p class="desc"><strong>20 gourmet biscotti</strong> in six indulgent flavors -- chocolate craisin, chocolate chip, caramel chip, nut crunch, almond crunch, and cookie crunch. All-natural, kosher certified, and non-dairy, so they work for almost any dietary preference.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>A sweet treat that feels genuinely premium without the premium price tag. Perfect on its own as a thoughtful gesture, or paired with coffee on a cozy Valentine's morning for a simple but memorable shared moment.</p>
+                    <p>Elegantly packaged with a ribbon bow, this box looks and tastes far more expensive than it is. Six unique flavors mean there's something for every palate, and it's a delicious alternative to the typical box of chocolates.</p>
                 </div>
-                <a href="https://www.amazon.com/Biscotti-Barnetts-Corporate-Mishloach-Assorted/dp/B0081BE3E4" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B006J7TAHM?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Biscotti Box 20ct', 5, 25.99)">Shop on Amazon</a>
             </div>
         </div>
 
-        <!-- Product 12 -->
-        <div class="product-card" id="product-12">
-            <div class="product-image grad-12">
-                <span class="rank">#12</span>
+        <!-- Product 6: That's Actually Fun -->
+        <div class="product-card" id="product-6">
+            <div class="product-image grad-6">
+                <span class="rank">#6</span>
                 <span class="cat-tag">Couple's Game</span>
                 <img src="https://m.media-amazon.com/images/I/611xkdRuE9L.jpg" alt="That's Actually Fun Couple's Game">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/Couples-Thats-Actually-Party-Partner/dp/B09PMQRSPF" target="_blank" rel="noopener noreferrer">"That's Actually Fun" Couple's Game</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B09PMQRSPF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Thats Actually Fun', 6, 19.97)">"That's Actually Fun" Couple's Game</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.6 · Popular</span></span>
+                    <span class="stars">4.6 -- Popular</span>
                     <span class="price">$19.97</span>
                 </div>
                 <p class="desc">A card game designed specifically for couples, packed with <strong>fun challenges, deep questions, and silly dares</strong> that range from heartfelt to hilarious. Perfect for turning any evening at home into a proper date night.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>It's actually fun — as the name boldly promises. The mix of question types keeps things interesting, sparking real conversations and genuine laughter. Way better than defaulting to screens, and it brings out sides of each other you might not expect.</p>
+                    <p>It's actually fun -- as the name boldly promises. The mix of question types keeps things interesting, sparking real conversations and genuine laughter. Way better than defaulting to screens.</p>
                 </div>
-                <a href="https://www.amazon.com/Couples-Thats-Actually-Party-Partner/dp/B09PMQRSPF" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B09PMQRSPF?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Thats Actually Fun', 6, 19.97)">Shop on Amazon</a>
             </div>
         </div>
 
-        <!-- Product 13 -->
-        <div class="product-card" id="product-13">
-            <div class="product-image grad-13">
-                <span class="rank">#13</span>
+        <!-- Product 7: Eternal Rose & Necklace -->
+        <div class="product-card" id="product-7">
+            <div class="product-image grad-7">
+                <span class="rank">#7</span>
+                <span class="cat-tag">Jewelry + Rose</span>
+                <img src="https://m.media-amazon.com/images/I/812mPjw89NL.jpg" alt="Eternal Rose & Heart Necklace Set">
+            </div>
+            <div class="product-info">
+                <h3><a href="https://www.amazon.com/dp/B0CCFYRH46?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Eternal Rose & Necklace', 7, 59.99)">Eternal Rose & Heart Necklace Set</a></h3>
+                <div class="product-meta">
+                    <span class="stars">4.6 -- Bestseller</span>
+                    <span class="price">$59.99</span>
+                </div>
+                <p class="desc">A preserved real rose paired with a <strong>heart crystal necklace</strong> in an elegant velvet-lined gift box. Two gifts in one -- a rose that lasts forever without water and a piece of jewelry she'll reach for every morning.</p>
+                <div class="why-great">
+                    <strong>Why we love it</strong>
+                    <p>The ultimate romantic combo that covers all bases. The rose never wilts, the necklace is a daily reminder of your love, and the luxurious presentation means you don't need to worry about gift wrapping.</p>
+                </div>
+                <a href="https://www.amazon.com/dp/B0CCFYRH46?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Eternal Rose & Necklace', 7, 59.99)">Shop on Amazon</a>
+            </div>
+        </div>
+
+        <!-- Product 8: Spa Gift Basket -->
+        <div class="product-card" id="product-8">
+            <div class="product-image grad-8">
+                <span class="rank">#8</span>
+                <span class="cat-tag">Spa & Wellness</span>
+                <img src="https://m.media-amazon.com/images/I/81bfbN1USPL.jpg" alt="Vanilla & Coconut Spa Gift Basket">
+            </div>
+            <div class="product-info">
+                <h3><a href="https://www.amazon.com/dp/B07GBFT6Z3?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Spa Gift Basket', 8, 37.98)">Vanilla & Coconut Spa Gift Basket</a></h3>
+                <div class="product-meta">
+                    <span class="stars">4.5 -- Popular</span>
+                    <span class="price">$37.98</span>
+                </div>
+                <p class="desc">A luxurious spa basket loaded with <strong>vanilla & coconut scented</strong> lotions, bath bombs, shower gel, and body care essentials. Everything is beautifully arranged in a reusable basket -- relaxation, delivered.</p>
+                <div class="why-great">
+                    <strong>Why we love it</strong>
+                    <p>The warm vanilla-coconut scent is universally loved and instantly calming. It's a thoughtful, indulgent way to say "you deserve to relax" -- and the reusable basket adds lasting value beyond the products themselves.</p>
+                </div>
+                <a href="https://www.amazon.com/dp/B07GBFT6Z3?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Spa Gift Basket', 8, 37.98)">Shop on Amazon</a>
+            </div>
+        </div>
+
+        <!-- Product 9: Bible Verse Jar -->
+        <div class="product-card" id="product-9">
+            <div class="product-image grad-9">
+                <span class="rank">#9</span>
+                <span class="cat-tag">Faith + Love</span>
+                <img src="https://m.media-amazon.com/images/I/81G7448o6JL.jpg" alt="Handmade Bible Verse Emotion Jar">
+            </div>
+            <div class="product-info">
+                <h3><a href="https://www.amazon.com/dp/B0D3VBVGG7?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Bible Verse Jar', 9, 9.98)">Handmade Bible Verse Emotion Jar</a></h3>
+                <div class="product-meta">
+                    <span class="stars">4.8 -- Popular</span>
+                    <span class="price">$9.98</span>
+                </div>
+                <p class="desc">A charming jar filled with <strong>handmade Bible verse scrolls</strong>, each matched to a different emotion or life situation. Pull one whenever you need encouragement, comfort, or a moment of gratitude together as a couple.</p>
+                <div class="why-great">
+                    <strong>Why we love it</strong>
+                    <p>Deeply meaningful, personal, and under $10 -- which makes it one of the best value picks on this list. Perfect for faith-driven couples who want to start or end each day with shared inspiration.</p>
+                </div>
+                <a href="https://www.amazon.com/dp/B0D3VBVGG7?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Bible Verse Jar', 9, 9.98)">Shop on Amazon</a>
+            </div>
+        </div>
+
+        <!-- Product 10: Fondue Kit -->
+        <div class="product-card" id="product-10">
+            <div class="product-image grad-10">
+                <span class="rank">#10</span>
+                <span class="cat-tag">Date Night</span>
+                <img src="https://m.media-amazon.com/images/I/51rFTkUmaLL.jpg" alt="Kusini Electric Fondue Pot Set">
+            </div>
+            <div class="product-info">
+                <h3><a href="https://www.amazon.com/dp/B0B785V2NF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Fondue Kit', 10, 34.99)">Kusini Electric Fondue Pot Set</a></h3>
+                <div class="product-meta">
+                    <span class="stars">4.5 -- Popular</span>
+                    <span class="price">$34.99</span>
+                </div>
+                <p class="desc">An <strong>electric chocolate fondue kit</strong> with temperature control, detachable serving trays, and 4 roasting forks. Perfect for a romantic evening dipping strawberries, marshmallows, and more into melted chocolate.</p>
+                <div class="why-great">
+                    <strong>Why we love it</strong>
+                    <p>It turns any evening into a fun, interactive date night. The setup takes minutes, and the shared experience of dipping and tasting together is both playful and romantic. Great for movie nights too.</p>
+                </div>
+                <a href="https://www.amazon.com/dp/B0B785V2NF?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Fondue Kit', 10, 34.99)">Shop on Amazon</a>
+            </div>
+        </div>
+
+        <!-- Product 11: Moissanite Necklace -->
+        <div class="product-card" id="product-11">
+            <div class="product-image grad-11">
+                <span class="rank">#11</span>
+                <span class="cat-tag">Jewelry</span>
+                <img src="https://m.media-amazon.com/images/I/613e-bIoE7L.jpg" alt="Elegant Moissanite Heart Necklace">
+            </div>
+            <div class="product-info">
+                <h3><a href="https://www.amazon.com/dp/B0CK7287CC?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Moissanite Necklace', 11, 79.99)">Elegant Moissanite Heart Necklace</a></h3>
+                <div class="product-meta">
+                    <span class="stars">4.7 -- Popular</span>
+                    <span class="price">$79.99</span>
+                </div>
+                <p class="desc">A stunning <strong>moissanite heart pendant</strong> that catches the light like a real diamond. Elegant, timeless design on a delicate chain -- the kind of piece that works with everything from casual outfits to evening wear.</p>
+                <div class="why-great">
+                    <strong>Why we love it</strong>
+                    <p>Moissanite offers diamond-level brilliance at a fraction of the cost, so you get maximum sparkle without the luxury price tag. This is a piece she'll genuinely treasure and reach for every single day.</p>
+                </div>
+                <a href="https://www.amazon.com/dp/B0CK7287CC?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('Moissanite Necklace', 11, 79.99)">Shop on Amazon</a>
+            </div>
+        </div>
+
+        <!-- Product 12: 100 Dates Scratch-Off -->
+        <div class="product-card" id="product-12">
+            <div class="product-image grad-12">
+                <span class="rank">#12</span>
                 <span class="cat-tag">Adventures</span>
                 <img src="https://m.media-amazon.com/images/I/4112mKNh-zL.jpg" alt="100 Dates Scratch-Off Bucket List">
             </div>
             <div class="product-info">
-                <h3><a href="https://www.amazon.com/Romantic-Couples-Gift-Adventurous-Girlfriend/dp/B08YWP5QRF" target="_blank" rel="noopener noreferrer">100 Dates Scratch-Off Bucket List</a></h3>
+                <h3><a href="https://www.amazon.com/dp/B08YWP5QRF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('100 Dates Scratch-Off', 12, 15.95)">100 Dates Scratch-Off Bucket List</a></h3>
                 <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.5 · Popular</span></span>
+                    <span class="stars">4.5 -- Popular</span>
                     <span class="price">$15.95</span>
                 </div>
                 <p class="desc"><strong>100 scratch-off date ideas</strong> on a beautifully designed poster. The concept is simple: scratch one off, do the date, and track your adventures together over time. Ranges from free activities to bigger outings.</p>
                 <div class="why-great">
                     <strong>Why we love it</strong>
-                    <p>One gift that equals 100 dates — hard to beat that value. The scratch-off element adds genuine surprise and excitement to every pick, and the poster itself looks great on the wall as a growing visual record of your shared adventures.</p>
+                    <p>One gift that equals 100 dates -- hard to beat that value. The scratch-off element adds genuine surprise and excitement to every pick, and the poster itself looks great on the wall as a growing record of your shared adventures.</p>
                 </div>
-                <a href="https://www.amazon.com/Romantic-Couples-Gift-Adventurous-Girlfriend/dp/B08YWP5QRF" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 14 -->
-        <div class="product-card" id="product-14">
-            <div class="product-image grad-14">
-                <span class="rank">#14</span>
-                <span class="cat-tag">Party Game</span>
-                <img src="https://m.media-amazon.com/images/I/71OmsZOmLlL.jpg" alt="What Do You Meme? Date Night Edition">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/WHAT-DO-YOU-MEME-Ultimate/dp/B0CR4G7CPD" target="_blank" rel="noopener noreferrer">What Do You Meme? Date Night Edition</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.6 · Popular</span></span>
-                    <span class="price">$14.99</span>
-                </div>
-                <p class="desc">The viral meme game, reimagined specifically for <strong>couples date night</strong>. Packed with playful challenges, hilarious prompts, and relationship-themed rounds designed to make you laugh and bring you closer together.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>Guaranteed laughs from the very first round. It turns any ordinary evening into an unforgettable date night full of inside jokes and shared memories. If you already love memes, this is a no-brainer Valentine's pick.</p>
-                </div>
-                <a href="https://www.amazon.com/WHAT-DO-YOU-MEME-Ultimate/dp/B0CR4G7CPD" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
-            </div>
-        </div>
-
-        <!-- Product 15 -->
-        <div class="product-card" id="product-15">
-            <div class="product-image grad-15">
-                <span class="rank">#15</span>
-                <span class="cat-tag">Gourmet</span>
-                <img src="https://m.media-amazon.com/images/I/81c+p7TWhNL.jpg" alt="Premium Gourmet Chocolate Biscotti Box">
-            </div>
-            <div class="product-info">
-                <h3><a href="https://www.amazon.com/Barnetts-Biscotti-Christmas-Thanksgiving-Valentines/dp/B006J7TAHM" target="_blank" rel="noopener noreferrer">Premium Gourmet Chocolate Biscotti Box (20ct)</a></h3>
-                <div class="product-meta">
-                    <span class="stars">★★★★★ <span class="rt">4.6 · Popular</span></span>
-                    <span class="price">$25.99</span>
-                </div>
-                <p class="desc"><strong>20 gourmet biscotti</strong> in six indulgent flavors — chocolate craisin, chocolate chip, caramel chip, nut crunch, almond crunch, and cookie crunch. All-natural, kosher certified, and non-dairy, so they work for almost any dietary preference.</p>
-                <div class="why-great">
-                    <strong>Why we love it</strong>
-                    <p>Elegantly packaged with a ribbon bow, this box looks and tastes far more expensive than it is. Six unique flavors mean there's something for every palate, and it's a refreshingly delicious alternative to the typical box of chocolates everyone else is giving.</p>
-                </div>
-                <a href="https://www.amazon.com/Barnetts-Biscotti-Christmas-Thanksgiving-Valentines/dp/B006J7TAHM" target="_blank" rel="noopener noreferrer" class="shop-btn">Shop on Amazon →</a>
+                <a href="https://www.amazon.com/dp/B08YWP5QRF?tag=cg002-20" target="_blank" rel="noopener noreferrer" class="shop-btn" onclick="trackProductClick('100 Dates Scratch-Off', 12, 15.95)">Shop on Amazon</a>
             </div>
         </div>
 
@@ -408,27 +522,24 @@
 
         <!-- Summary Table -->
         <div class="summary-section">
-            <h2>📊 Quick Comparison</h2>
+            <h2>Quick Comparison</h2>
             <table class="summary-table">
                 <thead>
                     <tr><th>#</th><th>Product</th><th>Price</th><th>Category</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td>1</td><td><a href="https://www.amazon.com/Birthday-Grandma-Coworker-Relaxing-Valentines/dp/B0DBVJWDNL" target="_blank">Relaxation Gift Set</a></td><td>$39.99</td><td>Relaxation</td></tr>
-                    <tr><td>2</td><td><a href="https://www.amazon.com/Lebana-Girlfriend-Valentines-Anniversary-Romantic-Red/dp/B0CCFYRH46" target="_blank">Eternal Rose & Necklace</a></td><td>$59.99</td><td>Jewelry + Rose</td></tr>
-                    <tr><td>3</td><td><a href="https://www.amazon.com/Luna-Bean-KEEPSAKE-Plaster-Materials/dp/B01E4LWBLQ" target="_blank">Hand Casting Kit</a></td><td>$29.33</td><td>Experience</td></tr>
-                    <tr><td>4</td><td><a href="https://www.amazon.com/Its-Date-Girlfriend-Boyfriend-Anniversaries/dp/B0BRNZ6FSW" target="_blank">Date Night Cards</a></td><td>$15.99</td><td>Date Nights</td></tr>
-                    <tr><td>5</td><td><a href="https://www.amazon.com/Bible-Emotions-Feelings-Christian-Graduation/dp/B0D3VBVGG7" target="_blank">Bible Verse Jar</a></td><td>$9.98</td><td>Faith + Love</td></tr>
-                    <tr><td>6</td><td><a href="https://www.amazon.com/GLAMOUR-BOUTIQUE-16-Piece-Forever-Flowers/dp/B0BBBG4QMF" target="_blank">Forever Roses Box</a></td><td>$39.95</td><td>Flowers</td></tr>
-                    <tr><td>7</td><td><a href="https://www.amazon.com/NUT-CRAVINGS-Gourmet-Collection-Appreciation/dp/B092B9494S" target="_blank">Nut Gift Basket</a></td><td>$34.97</td><td>Gourmet</td></tr>
-                    <tr><td>8</td><td><a href="https://www.amazon.com/dp/B0CK7287CC?th=1&psc=1" target="_blank">Moissanite Necklace</a></td><td>$79.99</td><td>Jewelry</td></tr>
-                    <tr><td>9</td><td><a href="https://www.amazon.com/Vanilla-Coconut-Fragrant-Lotions-Luxurious/dp/B07GBFT6Z3" target="_blank">Spa Gift Basket</a></td><td>$37.98</td><td>Spa & Wellness</td></tr>
-                    <tr><td>10</td><td><a href="https://www.amazon.com/JIMBON-Adventure-Scrapbook-Guestbook-Anniversary/dp/B091YKMS28" target="_blank">Adventure Scrapbook</a></td><td>$25.99</td><td>Memories</td></tr>
-                    <tr><td>11</td><td><a href="https://www.amazon.com/Biscotti-Barnetts-Corporate-Mishloach-Assorted/dp/B0081BE3E4" target="_blank">Biscotti Sampler 12ct</a></td><td>$14.99</td><td>Gourmet</td></tr>
-                    <tr><td>12</td><td><a href="https://www.amazon.com/Couples-Thats-Actually-Party-Partner/dp/B09PMQRSPF" target="_blank">That's Actually Fun</a></td><td>$19.97</td><td>Game</td></tr>
-                    <tr><td>13</td><td><a href="https://www.amazon.com/Romantic-Couples-Gift-Adventurous-Girlfriend/dp/B08YWP5QRF" target="_blank">100 Dates Scratch-Off</a></td><td>$15.95</td><td>Adventures</td></tr>
-                    <tr><td>14</td><td><a href="https://www.amazon.com/WHAT-DO-YOU-MEME-Ultimate/dp/B0CR4G7CPD" target="_blank">What Do You Meme?</a></td><td>$14.99</td><td>Game</td></tr>
-                    <tr><td>15</td><td><a href="https://www.amazon.com/Barnetts-Biscotti-Christmas-Thanksgiving-Valentines/dp/B006J7TAHM" target="_blank">Biscotti Box 20ct</a></td><td>$25.99</td><td>Gourmet</td></tr>
+                    <tr><td>1</td><td><a href="https://www.amazon.com/dp/B0DBVJWDNL?tag=cg002-20" target="_blank" onclick="trackProductClick('Relaxation Gift Set', 1, 39.99)">Relaxation Gift Set</a></td><td>$39.99</td><td>Relaxation</td></tr>
+                    <tr><td>2</td><td><a href="https://www.amazon.com/dp/B01E4LWBLQ?tag=cg002-20" target="_blank" onclick="trackProductClick('Hand Casting Kit', 2, 29.33)">Hand Casting Kit</a></td><td>$29.33</td><td>Experience</td></tr>
+                    <tr><td>3</td><td><a href="https://www.amazon.com/dp/B0BBBG4QMF?tag=cg002-20" target="_blank" onclick="trackProductClick('Forever Roses Box', 3, 39.95)">Forever Roses Box</a></td><td>$39.95</td><td>Flowers</td></tr>
+                    <tr><td>4</td><td><a href="https://www.amazon.com/dp/B091YKMS28?tag=cg002-20" target="_blank" onclick="trackProductClick('Adventure Scrapbook', 4, 25.99)">Adventure Scrapbook</a></td><td>$25.99</td><td>Memories</td></tr>
+                    <tr><td>5</td><td><a href="https://www.amazon.com/dp/B006J7TAHM?tag=cg002-20" target="_blank" onclick="trackProductClick('Biscotti Box 20ct', 5, 25.99)">Biscotti Box 20ct</a></td><td>$25.99</td><td>Gourmet</td></tr>
+                    <tr><td>6</td><td><a href="https://www.amazon.com/dp/B09PMQRSPF?tag=cg002-20" target="_blank" onclick="trackProductClick('Thats Actually Fun', 6, 19.97)">That's Actually Fun</a></td><td>$19.97</td><td>Game</td></tr>
+                    <tr><td>7</td><td><a href="https://www.amazon.com/dp/B0CCFYRH46?tag=cg002-20" target="_blank" onclick="trackProductClick('Eternal Rose & Necklace', 7, 59.99)">Eternal Rose & Necklace</a></td><td>$59.99</td><td>Jewelry + Rose</td></tr>
+                    <tr><td>8</td><td><a href="https://www.amazon.com/dp/B07GBFT6Z3?tag=cg002-20" target="_blank" onclick="trackProductClick('Spa Gift Basket', 8, 37.98)">Spa Gift Basket</a></td><td>$37.98</td><td>Spa & Wellness</td></tr>
+                    <tr><td>9</td><td><a href="https://www.amazon.com/dp/B0D3VBVGG7?tag=cg002-20" target="_blank" onclick="trackProductClick('Bible Verse Jar', 9, 9.98)">Bible Verse Jar</a></td><td>$9.98</td><td>Faith + Love</td></tr>
+                    <tr><td>10</td><td><a href="https://www.amazon.com/dp/B0B785V2NF?tag=cg002-20" target="_blank" onclick="trackProductClick('Fondue Kit', 10, 34.99)">Fondue Kit</a></td><td>$34.99</td><td>Date Night</td></tr>
+                    <tr><td>11</td><td><a href="https://www.amazon.com/dp/B0CK7287CC?tag=cg002-20" target="_blank" onclick="trackProductClick('Moissanite Necklace', 11, 79.99)">Moissanite Necklace</a></td><td>$79.99</td><td>Jewelry</td></tr>
+                    <tr><td>12</td><td><a href="https://www.amazon.com/dp/B08YWP5QRF?tag=cg002-20" target="_blank" onclick="trackProductClick('100 Dates Scratch-Off', 12, 15.95)">100 Dates Scratch-Off</a></td><td>$15.95</td><td>Adventures</td></tr>
                 </tbody>
             </table>
         </div>
@@ -436,19 +547,19 @@
         <!-- App CTA -->
         <div class="app-cta">
             <h2>Never Forget Another Anniversary</h2>
-            <p>Track every special date, save precious memories, and get smart reminders — all in one free app.</p>
+            <p>Track every special date, save precious memories, and get smart reminders -- all in one free app.</p>
             <div class="cta-buttons">
-                <a href="https://apps.apple.com/app/lovekeeper/id6758910603" class="cta-btn" target="_blank" rel="noopener noreferrer">
+                <a href="https://apps.apple.com/app/lovekeeper/id6758910603" class="cta-btn" target="_blank" rel="noopener noreferrer" onclick="trackCTAClick('app_store')">
                     <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=com.lovekeeper.app" class="cta-btn google-play" target="_blank" rel="noopener noreferrer">
+                <a href="https://play.google.com/store/apps/details?id=com.lovekeeper.app" class="cta-btn google-play" target="_blank" rel="noopener noreferrer" onclick="trackCTAClick('google_play')">
                     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
                 </a>
             </div>
         </div>
 
         <div class="disclosure">
-            <p>This article contains links to Amazon products. Prices are approximate and may vary. All products were selected based on ratings, reviews, and suitability as Valentine's Day gifts. We may earn a small commission on purchases made through these links at no extra cost to you.</p>
+            <p>This article contains affiliate links to Amazon products. Prices are approximate and may vary. All products were selected based on ratings, reviews, and suitability as Valentine's Day gifts. We may earn a small commission on purchases made through these links at no extra cost to you.</p>
         </div>
     </main>
 
