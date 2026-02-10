@@ -20,31 +20,60 @@
     <!-- Amplitude Analytics -->
     <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.0-min.js.gz"></script>
     <script>
-        window.amplitudeInstance = amplitude.createInstance();
-        window.amplitudeInstance.init('0e4516a34f8eee8212284227f964244', {
-            defaultTracking: { pageViews: true, sessions: true }
-        });
-        window.amplitudeInstance.track('blog_page_view', {
-            page: 'valentines-day-gift-ideas',
-            referrer: document.referrer || 'direct',
-            url: window.location.href
-        });
-        // Enhanced tracking functions with error handling
-        function safeTrack(eventName, properties) {
-            try {
-                if (window.amplitudeInstance && window.amplitudeInstance.track) {
-                    window.amplitudeInstance.track(eventName, properties);
-                    console.log(`✅ Tracked: ${eventName}`, properties);
-                } else {
-                    console.warn(`⚠️ Amplitude not available for event: ${eventName}`);
-                }
-            } catch (error) {
-                console.error(`❌ Failed to track ${eventName}:`, error);
-            }
-        }
+        (function () {
+            window.amplitudeInstance = null;
+            const amplitudeQueue = [];
 
+            function getText(el) {
+                return el && el.textContent ? el.textContent.trim() : '';
+            }
+
+            function safeTrack(eventName, properties) {
+                try {
+                    if (window.amplitudeInstance && window.amplitudeInstance.track) {
+                        window.amplitudeInstance.track(eventName, properties);
+                    } else {
+                        amplitudeQueue.push({ eventName, properties });
+                    }
+                } catch (error) {
+                    try { console.error(`❌ Failed to track ${eventName}:`, error); } catch { }
+                }
+            }
+
+            window.safeTrack = safeTrack;
+
+            function initAmplitudeIfPossible() {
+                try {
+                    if (window.amplitudeInstance || !window.amplitude || !window.amplitude.createInstance) {
+                        return;
+                    }
+                    window.amplitudeInstance = window.amplitude.createInstance();
+                    window.amplitudeInstance.init('0e4516a34f8eee8212284227f964244', {
+                        defaultTracking: { pageViews: true, sessions: true }
+                    });
+
+                    safeTrack('blog_page_view', {
+                        page: 'valentines-day-gift-ideas',
+                        referrer: document.referrer || 'direct',
+                        url: window.location.href
+                    });
+
+                    while (amplitudeQueue.length) {
+                        const evt = amplitudeQueue.shift();
+                        try {
+                            window.amplitudeInstance.track(evt.eventName, evt.properties);
+                        } catch { }
+                    }
+                } catch (error) {
+                    try { console.error('❌ Amplitude init failed:', error); } catch { }
+                }
+            }
+
+            initAmplitudeIfPossible();
+            window.addEventListener('load', initAmplitudeIfPossible);
+        })();
         function trackProductClick(productName, productRank, price) {
-            safeTrack('product_click', {
+            window.safeTrack('product_click', {
                 page: 'valentines-day-gift-ideas',
                 product_name: productName,
                 product_rank: productRank,
@@ -54,14 +83,14 @@
         }
         
         function trackCTAClick(ctaType) {
-            safeTrack('cta_click', {
+            window.safeTrack('cta_click', {
                 page: 'valentines-day-gift-ideas',
                 cta_type: ctaType
             });
         }
 
         function trackProductView(productName, productRank, price) {
-            safeTrack('product_view', {
+            window.safeTrack('product_view', {
                 page: 'valentines-day-gift-ideas',
                 product_name: productName,
                 product_rank: productRank,
@@ -88,7 +117,7 @@
             [25, 50, 75, 90].forEach(milestone => {
                 if (scrollPercentage >= milestone && !scrollDepthTracked[milestone]) {
                     scrollDepthTracked[milestone] = true;
-                    safeTrack('scroll_depth', {
+                    window.safeTrack('scroll_depth', {
                         page: 'valentines-day-gift-ideas',
                         scroll_percentage: milestone,
                         max_scroll_depth: maxScrollDepth,
@@ -108,7 +137,7 @@
             const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
             timeOnPageTracked = true;
             
-            safeTrack('time_on_page', {
+            window.safeTrack('time_on_page', {
                 page: 'valentines-day-gift-ideas',
                 time_spent_seconds: timeSpent,
                 max_scroll_depth: maxScrollDepth,
@@ -118,36 +147,46 @@
 
         // Intersection Observer for product visibility
         function setupProductVisibilityTracking() {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.5 // Track when 50% of product is visible
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const productCard = entry.target;
-                        const productId = productCard.id;
-                        const productRank = parseInt(productId.replace('product-', ''));
-                        
-                        // Get product details from the card
-                        const productName = productCard.querySelector('h3 a')?.textContent?.trim() || '';
-                        const priceText = productCard.querySelector('.price')?.textContent || '';
-                        const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
-                        
-                        if (productName && !productCard.dataset.viewTracked) {
-                            productCard.dataset.viewTracked = 'true';
-                            trackProductView(productName, productRank, price);
+            try {
+                if (!('IntersectionObserver' in window)) {
+                    return;
+                }
+
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.5 // Track when 50% of product is visible
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const productCard = entry.target;
+                            const productId = productCard.id;
+                            const productRank = parseInt(productId.replace('product-', ''));
+                            
+                            // Get product details from the card
+                            const nameEl = productCard.querySelector('h3 a');
+                            const productName = nameEl && nameEl.textContent ? nameEl.textContent.trim() : '';
+                            const priceEl = productCard.querySelector('.price');
+                            const priceText = priceEl && priceEl.textContent ? priceEl.textContent : '';
+                            const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+                            
+                            if (productName && !productCard.dataset.viewTracked) {
+                                productCard.dataset.viewTracked = 'true';
+                                trackProductView(productName, productRank, price);
+                            }
                         }
-                    }
+                    });
+                }, observerOptions);
+                
+                // Observe all product cards
+                document.querySelectorAll('.product-card').forEach(card => {
+                    observer.observe(card);
                 });
-            }, observerOptions);
-            
-            // Observe all product cards
-            document.querySelectorAll('.product-card').forEach(card => {
-                observer.observe(card);
-            });
+            } catch {
+                return;
+            }
         }
 
         // Initialize tracking when page loads
@@ -162,22 +201,52 @@
             // Setup product visibility tracking
             setupProductVisibilityTracking();
             
-            // Make product images clickable
+            // Make product images clickable with better error handling
             document.querySelectorAll('.product-image').forEach(imageContainer => {
-                imageContainer.addEventListener('click', function() {
+                imageContainer.addEventListener('click', function(e) {
                     const productCard = this.closest('.product-card');
+                    if (!productCard) {
+                        console.error('Could not find parent product card');
+                        return;
+                    }
+                    
                     const productRank = parseInt(productCard.id.replace('product-', ''));
-                    const productName = productCard.querySelector('h3 a')?.textContent?.trim() || '';
-                    const priceText = productCard.querySelector('.price')?.textContent || '';
+                    const nameEl = productCard.querySelector('h3 a');
+                    const productName = nameEl && nameEl.textContent ? nameEl.textContent.trim() : '';
+                    const priceEl = productCard.querySelector('.price');
+                    const priceText = priceEl && priceEl.textContent ? priceEl.textContent : '';
                     const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
-                    const amazonLink = productCard.querySelector('h3 a')?.href || productCard.querySelector('.shop-btn')?.href || '';
+                    
+                    // Try multiple selectors to find the Amazon link
+                    let linkEl = null;
+                    const linkSelectors = [
+                        'h3 a',
+                        '.shop-btn',
+                        'a[href*="amazon.com"]'
+                    ];
+                    
+                    for (const selector of linkSelectors) {
+                        const link = productCard.querySelector(selector);
+                        if (link && link.href && link.href.includes('amazon.com')) {
+                            linkEl = link;
+                            break;
+                        }
+                    }
                     
                     // Track the click
                     trackProductClick(productName, productRank, price);
                     
                     // Open Amazon link in new tab
-                    if (amazonLink) {
-                        window.open(amazonLink, '_blank', 'noopener,noreferrer');
+                    if (linkEl) {
+                        try {
+                            linkEl.click();
+                        } catch {
+                            try {
+                                window.open(linkEl.href, '_blank', 'noopener,noreferrer');
+                            } catch { }
+                        }
+                    } else {
+                        console.error('No Amazon link found for product:', productName);
                     }
                 });
             });
@@ -200,10 +269,26 @@
             height: 320px;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 1;
         }
         .product-image:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0);
+            transition: background 0.2s ease;
+            pointer-events: none;
+        }
+        .product-image:hover::after {
+            background: rgba(255,255,255,0.1);
         }
         .product-image img {
             width: 100%;
@@ -211,6 +296,7 @@
             object-fit: contain;
             padding: 20px;
             z-index: 2;
+            pointer-events: none; /* Prevents image from blocking clicks */
         }
         @media (max-width: 640px) {
             .product-image { height: 260px; }
@@ -238,13 +324,12 @@
 <body>
     <nav class="nav">
         <a class="nav-logo" href="../index.html"><img src="../logo.png" alt="LoveKeeper"> LoveKeeper</a>
-        <a href="index.html">Blog</a>
     </nav>
 
     <header class="article-hero">
         <div class="hero-badge">GIFT GUIDE 2026</div>
         <h1>Top 12 Romantic Valentine's Day Gift Ideas</h1>
-        <p class="subtitle">Hand-Picked Gifts for Couples -- From $10 to $80</p>
+        <p class="subtitle">Hand-Picked Gifts for Couples - $10-$80</p>
     </header>
 
     <main class="content">
@@ -264,7 +349,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B0DBVJWDNL?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Relaxation Gift Set', 1, 39.99)">Ultimate Relaxation Gift Set for Her</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.7 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.7</span></span>
                     <span class="price">$39.99</span>
                 </div>
                 <p class="desc">A complete spa experience at home -- bath bombs, scented candles, nourishing lotions, and more, all wrapped in a beautiful gift-ready package. <strong>Perfect for pampering</strong> your partner after a long week, turning any bathroom into a personal retreat.</p>
@@ -286,7 +371,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B01E4LWBLQ?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Hand Casting Kit', 2, 29.33)">Luna Bean DIY Hand Casting Kit</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.6 -- 40,000+ reviews</span>
+                    <span class="stars">★★★★★ <span class="rt">4.6</span></span>
                     <span class="price">$29.33</span>
                 </div>
                 <p class="desc">Create a <strong>permanent plaster sculpture</strong> of your intertwined hands together. The kit includes everything you need -- molding powder, casting stone, and step-by-step instructions. No artistic skills required.</p>
@@ -308,7 +393,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B0BBBG4QMF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Forever Roses Box', 3, 39.95)">Luxury Forever Roses Gift Box</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.5 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.5</span></span>
                     <span class="price">$39.95</span>
                 </div>
                 <p class="desc"><strong>16 preserved real roses</strong> arranged in a luxury gift box. These aren't artificial -- they're real roses that have been specially treated to last for years without water or sunlight, making them a stunning permanent display piece.</p>
@@ -330,7 +415,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B091YKMS28?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Adventure Scrapbook', 4, 25.99)">"Our Adventure" DIY Scrapbook Album</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.7 -- Bestseller</span>
+                    <span class="stars">★★★★★ <span class="rt">4.7</span></span>
                     <span class="price">$25.99</span>
                 </div>
                 <p class="desc">An <strong>"Up"-inspired adventure scrapbook</strong> to fill with your favorite photos, ticket stubs, and memories. Comes with decorating accessories like stickers, photo corners, and a pen to get you started right away.</p>
@@ -352,7 +437,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B006J7TAHM?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Biscotti Box 20ct', 5, 25.99)">Premium Gourmet Chocolate Biscotti Box (20ct)</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.6 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.6</span></span>
                     <span class="price">$25.99</span>
                 </div>
                 <p class="desc"><strong>20 gourmet biscotti</strong> in six indulgent flavors -- chocolate craisin, chocolate chip, caramel chip, nut crunch, almond crunch, and cookie crunch. All-natural, kosher certified, and non-dairy, so they work for almost any dietary preference.</p>
@@ -374,7 +459,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B09PMQRSPF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Thats Actually Fun', 6, 19.97)">"That's Actually Fun" Couple's Game</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.6 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.6</span></span>
                     <span class="price">$19.97</span>
                 </div>
                 <p class="desc">A card game designed specifically for couples, packed with <strong>fun challenges, deep questions, and silly dares</strong> that range from heartfelt to hilarious. Perfect for turning any evening at home into a proper date night.</p>
@@ -396,7 +481,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B0CCFYRH46?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Eternal Rose & Necklace', 7, 59.99)">Eternal Rose & Heart Necklace Set</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.6 -- Bestseller</span>
+                    <span class="stars">★★★★★ <span class="rt">4.6</span></span>
                     <span class="price">$59.99</span>
                 </div>
                 <p class="desc">A preserved real rose paired with a <strong>heart crystal necklace</strong> in an elegant velvet-lined gift box. Two gifts in one -- a rose that lasts forever without water and a piece of jewelry she'll reach for every morning.</p>
@@ -418,7 +503,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B07GBFT6Z3?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Spa Gift Basket', 8, 37.98)">Vanilla & Coconut Spa Gift Basket</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.5 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.5</span></span>
                     <span class="price">$37.98</span>
                 </div>
                 <p class="desc">A luxurious spa basket loaded with <strong>vanilla & coconut scented</strong> lotions, bath bombs, shower gel, and body care essentials. Everything is beautifully arranged in a reusable basket -- relaxation, delivered.</p>
@@ -440,7 +525,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B0D3VBVGG7?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Bible Verse Jar', 9, 9.98)">Handmade Bible Verse Emotion Jar</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.8 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.8</span></span>
                     <span class="price">$9.98</span>
                 </div>
                 <p class="desc">A charming jar filled with <strong>handmade Bible verse scrolls</strong>, each matched to a different emotion or life situation. Pull one whenever you need encouragement, comfort, or a moment of gratitude together as a couple.</p>
@@ -462,7 +547,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B0B785V2NF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Fondue Kit', 10, 34.99)">Kusini Electric Fondue Pot Set</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.5 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.5</span></span>
                     <span class="price">$34.99</span>
                 </div>
                 <p class="desc">An <strong>electric chocolate fondue kit</strong> with temperature control, detachable serving trays, and 4 roasting forks. Perfect for a romantic evening dipping strawberries, marshmallows, and more into melted chocolate.</p>
@@ -484,7 +569,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B0CK7287CC?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('Moissanite Necklace', 11, 79.99)">Elegant Moissanite Heart Necklace</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.7 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.7</span></span>
                     <span class="price">$79.99</span>
                 </div>
                 <p class="desc">A stunning <strong>moissanite heart pendant</strong> that catches the light like a real diamond. Elegant, timeless design on a delicate chain -- the kind of piece that works with everything from casual outfits to evening wear.</p>
@@ -506,7 +591,7 @@
             <div class="product-info">
                 <h3><a href="https://www.amazon.com/dp/B08YWP5QRF?tag=cg002-20" target="_blank" rel="noopener noreferrer" onclick="trackProductClick('100 Dates Scratch-Off', 12, 15.95)">100 Dates Scratch-Off Bucket List</a></h3>
                 <div class="product-meta">
-                    <span class="stars">4.5 -- Popular</span>
+                    <span class="stars">★★★★★ <span class="rt">4.5</span></span>
                     <span class="price">$15.95</span>
                 </div>
                 <p class="desc"><strong>100 scratch-off date ideas</strong> on a beautifully designed poster. The concept is simple: scratch one off, do the date, and track your adventures together over time. Ranges from free activities to bigger outings.</p>
