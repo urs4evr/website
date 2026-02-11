@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Top 10 Valentine's Day date ideas for couples on a budget. Creative, romantic, and fun activities that don't cost a fortune — from spa days to backyard camping.">
+    <meta name="keywords" content="valentine's day ideas, date ideas for couples, romantic date ideas, cheap valentine's day, budget date night, couple activities">
+    <meta property="og:title" content="Top 10 Valentine's Day Date Ideas for Couples (2026)">
+    <meta property="og:description" content="Creative, romantic date ideas that don't cost a fortune. From thermal spa days to backyard camping — make this Valentine's Day unforgettable.">
+    <meta property="og:type" content="article">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <title>Top 10 Valentine's Day Date Ideas for Couples (2026) | LoveKeeper Blog</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-514653192"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-514653192');
+    </script>
+    <!-- Amplitude Analytics -->
+    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.0-min.js.gz"></script>
+    <script>
+        (function () {
+            window.amplitudeInstance = null;
+            const amplitudeQueue = [];
+
+            function safeTrack(eventName, properties) {
+                try {
+                    if (window.amplitudeInstance && window.amplitudeInstance.track) {
+                        window.amplitudeInstance.track(eventName, properties);
+                    } else {
+                        amplitudeQueue.push({ eventName, properties });
+                    }
+                } catch (error) {
+                    try { console.error(`Failed to track ${eventName}:`, error); } catch { }
+                }
+            }
+
+            window.safeTrack = safeTrack;
+
+            function initAmplitudeIfPossible() {
+                try {
+                    if (window.amplitudeInstance || !window.amplitude || !window.amplitude.createInstance) {
+                        return;
+                    }
+                    window.amplitudeInstance = window.amplitude.createInstance();
+                    window.amplitudeInstance.init('0e4516a34f8eee8212284227f964244', {
+                        defaultTracking: { pageViews: true, sessions: true }
+                    });
+
+                    safeTrack('blog_page_view', {
+                        page: 'valentines-day-date-ideas',
+                        referrer: document.referrer || 'direct',
+                        url: window.location.href
+                    });
+
+                    while (amplitudeQueue.length) {
+                        const evt = amplitudeQueue.shift();
+                        try {
+                            window.amplitudeInstance.track(evt.eventName, evt.properties);
+                        } catch { }
+                    }
+                } catch (error) {
+                    try { console.error('Amplitude init failed:', error); } catch { }
+                }
+            }
+
+            initAmplitudeIfPossible();
+            window.addEventListener('load', initAmplitudeIfPossible);
+        })();
+
+        function trackCTAClick(ctaType) {
+            window.safeTrack('cta_click', {
+                page: 'valentines-day-date-ideas',
+                cta_type: ctaType
+            });
+        }
+
+        // Scroll tracking for engagement
+        let scrollDepthTracked = { 25: false, 50: false, 75: false, 90: false };
+        let maxScrollDepth = 0;
+        
+        function trackScrollDepth() {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPosition = window.scrollY;
+            const scrollPercentage = Math.round((scrollPosition / scrollHeight) * 100);
+            
+            if (scrollPercentage > maxScrollDepth) {
+                maxScrollDepth = scrollPercentage;
+            }
+            
+            [25, 50, 75, 90].forEach(milestone => {
+                if (scrollPercentage >= milestone && !scrollDepthTracked[milestone]) {
+                    scrollDepthTracked[milestone] = true;
+                    window.safeTrack('scroll_depth', {
+                        page: 'valentines-day-date-ideas',
+                        scroll_percentage: milestone,
+                        max_scroll_depth: maxScrollDepth,
+                        referrer: document.referrer || 'direct'
+                    });
+                }
+            });
+        }
+
+        // Time on page tracking
+        let pageStartTime = Date.now();
+        let timeOnPageTracked = false;
+        
+        function trackTimeOnPage() {
+            if (timeOnPageTracked) return;
+            
+            const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
+            timeOnPageTracked = true;
+            
+            window.safeTrack('time_on_page', {
+                page: 'valentines-day-date-ideas',
+                time_spent_seconds: timeSpent,
+                max_scroll_depth: maxScrollDepth,
+                referrer: document.referrer || 'direct'
+            });
+        }
+
+        // Initialize tracking when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            let scrollTimer;
+            window.addEventListener('scroll', function() {
+                if (scrollTimer) clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(trackScrollDepth, 100);
+            });
+            
+            window.addEventListener('beforeunload', trackTimeOnPage);
+            window.addEventListener('pagehide', trackTimeOnPage);
+            
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    trackTimeOnPage();
+                }
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="article-styles.css">
+    <style>
+        .idea-image {
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+        }
+        .idea-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;
+        }
+        .idea-image .rank {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: #FF6B9D;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            z-index: 3;
+        }
+        .idea-image .cat-tag {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            z-index: 3;
+        }
+        .idea-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .idea-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 36px rgba(0,0,0,0.12);
+        }
+        .idea-info {
+            padding: 28px 32px 32px;
+        }
+        .idea-info h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .idea-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .cost-tag {
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .vibe-tag {
+            background: #FFF0F3;
+            color: #FF6B9D;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .idea-desc {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+        .pro-tip {
+            background: linear-gradient(135deg, #FFF8E1, #FFF3E0);
+            border-left: 4px solid #FFB800;
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 0;
+        }
+        .pro-tip strong {
+            display: block;
+            color: #E65100;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .pro-tip p {
+            color: #555;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .article-hero {
+            padding: 60px 24px 40px;
+        }
+        .intro {
+            margin: -20px auto 32px;
+        }
+        .quick-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        @media (max-width: 640px) {
+            .idea-image { height: 220px; }
+            .idea-info { padding: 20px 24px 28px; }
+            .idea-info h3 { font-size: 19px; }
+            .quick-nav-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a class="nav-logo" href="../index.html"><img src="../logo.png" alt="LoveKeeper"> LoveKeeper</a>
+        <a href="index.html">&larr; Blog</a>
+    </nav>
+
+    <header class="article-hero">
+        <div class="hero-badge">DATE IDEAS 2026</div>
+        <h1>Top 10 Valentine's Day Date Ideas</h1>
+        <p class="subtitle">Creative, Romantic & Budget-Friendly</p>
+    </header>
+
+    <main class="content">
+        <div class="intro">
+            <p><strong>Valentine's Day doesn't have to mean an overpriced dinner at a crowded restaurant.</strong> The best dates are the ones that create real memories — shared experiences that bring you closer together. We've put together 10 creative, romantic ideas that range from completely free to surprisingly affordable. No reservations required.</p>
+        </div>
+
+        <!-- IDEAS START -->
+
+        <!-- Idea 1: Spa Day at Thermal Baths -->
+        <div class="idea-card" id="idea-1">
+            <div class="idea-image">
+                <span class="rank">#1</span>
+                <span class="cat-tag">Relaxation</span>
+                <img src="images/date-ideas/spa-thermal-baths.jpg" alt="Romantic spa day with candles and warm bath" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Spa Day at Thermal Baths</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">$$</span>
+                    <span class="vibe-tag">Romantic & Relaxing</span>
+                </div>
+                <p class="idea-desc">There's something deeply romantic about spending a day soaking in warm thermal waters together. Most thermal bath complexes offer <strong>saunas, steam rooms, and relaxation areas</strong> where you can completely unwind side by side. It's the kind of slow, intimate experience that lets you actually talk, laugh, and just be present with each other — no phones, no distractions.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Book a couples' massage add-on if your budget allows. Many thermal baths offer discounted packages on Valentine's Day. Go on a weekday if possible — fewer crowds, more peace.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 2: Write Letters to Your Future Selves -->
+        <div class="idea-card" id="idea-2">
+            <div class="idea-image">
+                <span class="rank">#2</span>
+                <span class="cat-tag">Sentimental</span>
+                <img src="images/date-ideas/letters-final-c.jpg" alt="Romantic couple writing letters together" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Write Letters to Your Future Selves</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">Free</span>
+                    <span class="vibe-tag">Meaningful & Intimate</span>
+                </div>
+                <p class="idea-desc">Grab some nice paper, sit down together, and each write a letter to your future selves — to be opened on next year's Valentine's Day. Write about <strong>where you are now, what you're grateful for, your dreams for the year ahead, and what you love most about each other</strong> right now. Seal them, date them, and put them somewhere safe. When you open them a year later, it becomes one of the most emotional, beautiful traditions you'll ever start.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Write two letters each — one to yourself and one to your partner. Light some candles, put on soft music, and make it a proper ritual. You can also use the LoveKeeper app to set a reminder for next year's opening date.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 3: Create a Couple's Vision Board -->
+        <div class="idea-card" id="idea-3">
+            <div class="idea-image">
+                <span class="rank">#3</span>
+                <span class="cat-tag">Creative</span>
+                <img src="images/date-ideas/vision-final-b.jpg" alt="Couple planning and creating a vision board together" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Create a Couple's Vision Board</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">$</span>
+                    <span class="vibe-tag">Fun & Inspiring</span>
+                </div>
+                <p class="idea-desc">A vision board isn't just arts and crafts — it's a <strong>shared roadmap for your relationship</strong>. Grab some magazines, printed photos, markers, and a poster board. Together, cut out and pin up images and words that represent your goals as a couple: trips you want to take, milestones you're working toward, the life you're building together. It's creative, it sparks real conversation, and you end up with something beautiful to hang on your wall.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Include a mix of short-term goals (weekend trips, new recipes to try) and big dreams (dream home, bucket list destinations). Take a photo of the finished board and revisit it together every few months.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 4: Go Roller or Ice Skating -->
+        <div class="idea-card" id="idea-4">
+            <div class="idea-image">
+                <span class="rank">#4</span>
+                <span class="cat-tag">Active</span>
+                <img src="images/date-ideas/skating-final-a.jpg" alt="Couple holding hands while ice skating in winter" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Go Roller or Ice Skating</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">$</span>
+                    <span class="vibe-tag">Playful & Romantic</span>
+                </div>
+                <p class="idea-desc">Whether it's gliding across an ice rink or rolling around a skating rink, there's something <strong>inherently romantic about holding hands while trying not to fall</strong>. It's playful, it's physical, and it creates those genuine laugh-out-loud moments that you'll remember for years. Even if one of you is terrible at it — especially if one of you is terrible at it — it's an absolute blast.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Go during an evening session when the lights are dimmed and the music is on. Bring warm drinks for afterward — hot chocolate or mulled wine makes the perfect post-skate treat.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 5: Bike Ride Together -->
+        <div class="idea-card" id="idea-5">
+            <div class="idea-image">
+                <span class="rank">#5</span>
+                <span class="cat-tag">Outdoor</span>
+                <img src="images/date-ideas/bike-ride-b.jpg" alt="Romantic couple with bicycles and flowers" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Bike Ride Together</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">Free</span>
+                    <span class="vibe-tag">Adventurous & Refreshing</span>
+                </div>
+                <p class="idea-desc">Pick a scenic route — along a river, through a park, or around your neighborhood — and just ride together. A bike ride is one of those <strong>beautifully simple activities</strong> that gives you fresh air, gentle exercise, and plenty of time to talk (or just enjoy comfortable silence). It's the kind of date that feels effortless but somehow always ends up being one of the best ones.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Plan a destination — a café, a viewpoint, or a spot for a mini picnic. Having a "goal" makes the ride feel like a little adventure. If you don't own bikes, most cities have affordable bike-share programs.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 6: Have a Picnic in a Park -->
+        <div class="idea-card" id="idea-6">
+            <div class="idea-image">
+                <span class="rank">#6</span>
+                <span class="cat-tag">Classic</span>
+                <img src="images/date-ideas/picnic-final-a.jpg" alt="Romantic couple enjoying a picnic in the park" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Have a Picnic in a Park</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">$</span>
+                    <span class="vibe-tag">Classic & Charming</span>
+                </div>
+                <p class="idea-desc">A picnic is a timeless date for a reason — it's <strong>simple, romantic, and endlessly customizable</strong>. Pack a blanket, some good food (homemade or from your favorite deli), a bottle of wine or sparkling water, and find a beautiful spot in your local park. No waiters, no time limits, no bill at the end. Just the two of you, good food, and the open sky.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Elevate it with small touches: real glasses instead of plastic, a Bluetooth speaker with a soft playlist, and a few surprise treats like fancy cheese or chocolate-covered strawberries. A sunset picnic is peak romance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 7: Board Game Night or Video Game Tournament -->
+        <div class="idea-card" id="idea-7">
+            <div class="idea-image">
+                <span class="rank">#7</span>
+                <span class="cat-tag">Cozy</span>
+                <img src="images/date-ideas/board-games.jpg" alt="Couple playing board games together at home" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Board Game Night or Video Game Tournament</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">Free</span>
+                    <span class="vibe-tag">Fun & Competitive</span>
+                </div>
+                <p class="idea-desc">Sometimes the best dates happen on your couch. Dust off those board games, or fire up the console and <strong>challenge each other to a proper tournament</strong>. Whether it's Scrabble, Catan, Mario Kart, or a co-op adventure game — the friendly competition brings out a different, playful side of your relationship. Add some snacks and drinks, and you've got a perfect evening.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Set stakes to make it interesting — loser cooks dinner next week, or winner picks the next movie. Try a couples-specific card game like "We're Not Really Strangers" for deeper conversations between rounds.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 8: Try a New Local Restaurant -->
+        <div class="idea-card" id="idea-8">
+            <div class="idea-image">
+                <span class="rank">#8</span>
+                <span class="cat-tag">Foodie</span>
+                <img src="images/date-ideas/restaurant-date.jpg" alt="Couple at a romantic restaurant" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Try a New Local Restaurant You've Never Been To</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">$$</span>
+                    <span class="vibe-tag">Exciting & Delicious</span>
+                </div>
+                <p class="idea-desc">Skip the usual spots and <strong>deliberately pick somewhere neither of you has ever been</strong>. A tiny Thai place tucked in a side street, a new Ethiopian restaurant, that ramen shop you keep walking past — exploring new food together is one of the most underrated date activities. There's a shared sense of adventure in not knowing what to expect, and discovering a new favorite spot together becomes your thing.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Make it a game: each of you picks a restaurant the other has never heard of, put them in a hat, and draw one. Or try a cuisine neither of you has ever had before. Avoid Valentine's Day prix fixe menus — go the night before or after for a better experience.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 9: DIY Cocktail Night -->
+        <div class="idea-card" id="idea-9">
+            <div class="idea-image">
+                <span class="rank">#9</span>
+                <span class="cat-tag">At Home</span>
+                <img src="images/date-ideas/cocktail-night.jpg" alt="Couple laughing with cocktails at home" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>DIY Cocktail Night</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">$</span>
+                    <span class="vibe-tag">Creative & Flirty</span>
+                </div>
+                <p class="idea-desc">Turn your kitchen into a cocktail bar for the night. Pick 3-4 cocktail recipes you've never tried, <strong>grab the ingredients, and mix them together</strong>. The process is half the fun — measuring, shaking, tasting, adjusting. You'll laugh at the failures and toast to the successes. It's interactive, it's creative, and it's way more fun (and cheaper) than sitting at an actual bar.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Look up classic Valentine's cocktails — French 75, Espresso Martini, or Aperol Spritz are crowd-pleasers. Don't forget garnishes (fresh fruit, herbs, edible flowers). Play bartender for each other and rate each creation.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Idea 10: Backyard or Tent Camping -->
+        <div class="idea-card" id="idea-10">
+            <div class="idea-image">
+                <span class="rank">#10</span>
+                <span class="cat-tag">Adventure</span>
+                <img src="images/date-ideas/camping-final-b.jpg" alt="Smiling couple lying together in a camping tent" loading="lazy">
+            </div>
+            <div class="idea-info">
+                <h3>Backyard or Tent Camping</h3>
+                <div class="idea-meta">
+                    <span class="cost-tag">Free – $</span>
+                    <span class="vibe-tag">Adventurous & Cozy</span>
+                </div>
+                <p class="idea-desc">You don't need to drive hours into the wilderness — <strong>set up a tent in your backyard, on a balcony, or even in your living room</strong> and create your own little camping escape. String up fairy lights, lay out sleeping bags and blankets, make s'mores (stovetop works fine), and stargaze together. It's the coziness of camping without the logistics, and there's something magical about sleeping under the stars — even if your "wilderness" is your own garden.</p>
+                <div class="pro-tip">
+                    <strong>Pro Tip</strong>
+                    <p>Go all in on the atmosphere: fairy lights, a portable speaker with nature sounds, warm blankets, and a thermos of hot cocoa. Tell each other stories, play "would you rather," or just lie there and talk about everything and nothing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- IDEAS END -->
+
+        <!-- Summary -->
+        <div class="summary-section">
+            <h2>Quick Overview</h2>
+            <table class="summary-table">
+                <thead>
+                    <tr><th>#</th><th>Date Idea</th><th>Cost</th><th>Vibe</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Spa Day at Thermal Baths</td><td>$$</td><td>Romantic & Relaxing</td></tr>
+                    <tr><td>2</td><td>Letters to Your Future Selves</td><td>Free</td><td>Meaningful & Intimate</td></tr>
+                    <tr><td>3</td><td>Couple's Vision Board</td><td>$</td><td>Fun & Inspiring</td></tr>
+                    <tr><td>4</td><td>Roller or Ice Skating</td><td>$</td><td>Playful & Romantic</td></tr>
+                    <tr><td>5</td><td>Bike Ride Together</td><td>Free</td><td>Adventurous & Refreshing</td></tr>
+                    <tr><td>6</td><td>Picnic in a Park</td><td>$</td><td>Classic & Charming</td></tr>
+                    <tr><td>7</td><td>Board Game Night</td><td>Free</td><td>Fun & Competitive</td></tr>
+                    <tr><td>8</td><td>New Local Restaurant</td><td>$$</td><td>Exciting & Delicious</td></tr>
+                    <tr><td>9</td><td>DIY Cocktail Night</td><td>$</td><td>Creative & Flirty</td></tr>
+                    <tr><td>10</td><td>Backyard Camping</td><td>Free – $</td><td>Adventurous & Cozy</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- App CTA -->
+        <div class="app-cta">
+            <h2>Never Forget Another Anniversary</h2>
+            <p>Track every special date, save precious memories, and get smart reminders — all in one free app.</p>
+            <div class="cta-buttons">
+                <a href="https://apps.apple.com/app/lovekeeper/id6758910603" class="cta-btn" target="_blank" rel="noopener noreferrer" onclick="trackCTAClick('app_store')">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.lovekeeper.app" class="cta-btn google-play" target="_blank" rel="noopener noreferrer" onclick="trackCTAClick('google_play')">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play">
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../support.html">Support</a>
+            <a href="../privacy.html">Privacy Policy</a>
+            <a href="../terms.html">Terms of Service</a>
+            <a href="../contact.html">Contact</a>
+        </div>
+        <p>&copy; 2026 LoveKeeper. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -236,14 +236,13 @@
                     // Track the click
                     trackProductClick(productName, productRank, price);
                     
-                    // Open Amazon link in new tab
+                    // Open Amazon link in new tab (use window.open directly to avoid
+                    // triggering the anchor's onclick which would double-track)
                     if (linkEl) {
                         try {
-                            linkEl.click();
+                            window.open(linkEl.href, '_blank', 'noopener,noreferrer');
                         } catch {
-                            try {
-                                window.open(linkEl.href, '_blank', 'noopener,noreferrer');
-                            } catch { }
+                            console.error('Could not open link for product:', productName);
                         }
                     } else {
                         console.error('No Amazon link found for product:', productName);
