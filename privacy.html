@@ -171,22 +171,22 @@
         <div class="header">
             <div class="logo">💖</div>
             <h1>Privacy Policy</h1>
-            <p class="last-updated">Last Updated: February 8, 2026</p>
+            <p class="last-updated">Last Updated: February 18, 2026</p>
         </div>
 
         <div class="highlight">
-            <p><strong>TL;DR:</strong> LoveKeeper is a privacy-first app. All your data (events, photos, memories) is stored ONLY on your device. We don't have access to your personal information. We use minimal analytics to improve the app, and you can opt-out anytime.</p>
+            <p><strong>TL;DR:</strong> LoveKeeper stores your relationship content (events, memories, photos) locally on your device. To support email reminders and account management, limited account data (such as your email and confirmation/deletion tokens) is stored securely on our server. We use minimal analytics to improve the app.</p>
         </div>
 
         <h2>1. Introduction</h2>
         <p>Welcome to LoveKeeper ("we," "our," or "us"). We respect your privacy and are committed to protecting your personal data. This privacy policy explains how we handle your information when you use our mobile application LoveKeeper (the "App").</p>
 
-        <p><strong>Key Principle:</strong> Your personal data belongs to you. We designed LoveKeeper to store all your events, memories, and photos locally on your device, not on our servers.</p>
+        <p><strong>Key Principle:</strong> Your personal data belongs to you. We designed LoveKeeper so your core relationship content remains on your device, while only limited account data is processed server-side when you use email/account features.</p>
 
         <h2>2. Data We Collect</h2>
 
-        <h3>2.1 Data Stored Locally (On Your Device Only)</h3>
-        <p>The following data is stored exclusively on your device and is never transmitted to our servers:</p>
+        <h3>2.1 Core Data Stored Locally (On Your Device)</h3>
+        <p>The following core app data is stored on your device:</p>
         <ul>
             <li><strong>Events:</strong> Anniversary dates, birthdays, event names, categories, emojis, and photos</li>
             <li><strong>Memories:</strong> Photos, titles, descriptions, dates, and categories</li>
@@ -198,11 +198,22 @@
             <strong>Important:</strong> If you delete the app or reset your device, all this data will be permanently lost unless you have created a backup.
         </p>
 
-        <h3>2.2 Analytics Data (Optional - Can Be Disabled)</h3>
-        <p>To improve the app, we collect minimal, anonymized usage data through Amplitude Analytics:</p>
+        <h3>2.2 Account & Email Data Stored Server-Side</h3>
+        <p>When you provide an email address in onboarding/settings or request account deletion, we store limited account data on our server (Supabase):</p>
+        <ul>
+            <li><strong>Account email:</strong> Your email address</li>
+            <li><strong>Email preferences:</strong> Opt-in and confirmation status</li>
+            <li><strong>Security tokens:</strong> Email confirmation and account deletion tokens (one-time use)</li>
+            <li><strong>Token timestamps:</strong> When confirmation/deletion requests were generated</li>
+            <li><strong>Push delivery data:</strong> Push token metadata linked to your account (if available)</li>
+        </ul>
+        <p>We do <strong>not</strong> store your events, memories, or photos on our server as part of this account system.</p>
+
+        <h3>2.3 Analytics Data</h3>
+        <p>To improve the app, we collect minimal usage data through Amplitude Analytics:</p>
         <ul>
             <li><strong>App usage:</strong> Which features you use (e.g., created an event, added a memory)</li>
-            <li><strong>Device information:</strong> Device type (iPhone 15, Samsung Galaxy, etc.), OS version, app version</li>
+            <li><strong>Device information:</strong> Device type, OS version, app version</li>
             <li><strong>Performance data:</strong> App crashes, loading times, error reports</li>
             <li><strong>General statistics:</strong> Session duration, feature engagement</li>
         </ul>
@@ -211,12 +222,12 @@
         <ul>
             <li>Your actual event names, dates, or details</li>
             <li>Your photos or memory content</li>
-            <li>Your personal information (name, email, phone)</li>
+            <li>Your email content or confirmation/deletion tokens</li>
             <li>Your location</li>
             <li>Your contacts</li>
         </ul>
 
-        <h3>2.3 Device Permissions</h3>
+        <h3>2.4 Device Permissions</h3>
         <p>The app requests the following permissions:</p>
         <ul>
             <li><strong>Camera:</strong> To take photos for your memories and events (optional, only if you use the camera feature)</li>
@@ -237,7 +248,16 @@
         </ul>
         <p>This data never leaves your device unless you explicitly share it (e.g., by exporting or taking a screenshot).</p>
 
-        <h3>3.2 Analytics Data</h3>
+        <h3>3.2 Account & Email Data</h3>
+        <p>Server-side account/email data is used to:</p>
+        <ul>
+            <li>Send confirmation emails and validate email ownership</li>
+            <li>Send optional reminder emails</li>
+            <li>Process account deletion requests initiated in-app</li>
+            <li>Maintain push delivery linkage for reminder infrastructure</li>
+        </ul>
+
+        <h3>3.3 Analytics Data</h3>
         <p>Anonymous analytics data is used to:</p>
         <ul>
             <li>Understand which features are most popular</li>
@@ -252,11 +272,24 @@
         <p>We use the following third-party services:</p>
 
         <div class="contact">
+            <h4>Supabase (Database & Edge Functions)</h4>
+            <p><strong>Purpose:</strong> Store account/email records and execute confirmation/deletion flows</p>
+            <p><strong>Data Shared:</strong> Email, email confirmation/deletion tokens, related timestamps, push token linkage</p>
+            <p><strong>Privacy Policy:</strong> <a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a></p>
+        </div>
+
+        <div class="contact">
+            <h4>Resend (Transactional Email Delivery)</h4>
+            <p><strong>Purpose:</strong> Send confirmation, reminder, and account deletion emails</p>
+            <p><strong>Data Shared:</strong> Recipient email address and email template content</p>
+            <p><strong>Privacy Policy:</strong> <a href="https://resend.com/privacy" target="_blank">resend.com/privacy</a></p>
+        </div>
+
+        <div class="contact">
             <h4>Amplitude Analytics (App)</h4>
             <p><strong>Purpose:</strong> Anonymous usage analytics within the mobile app</p>
-            <p><strong>Data Shared:</strong> App usage events, device type, OS version (no personal data)</p>
+            <p><strong>Data Shared:</strong> App usage events, device/app metadata, and pseudonymous identifiers</p>
             <p><strong>Privacy Policy:</strong> <a href="https://amplitude.com/privacy" target="_blank">amplitude.com/privacy</a></p>
-            <p><strong>How to opt-out:</strong> You can disable analytics in the app settings</p>
         </div>
 
         <div class="contact">
@@ -297,6 +330,8 @@
         <h2>5. Data Retention</h2>
         <ul>
             <li><strong>Local Data:</strong> Stored on your device until you delete it or uninstall the app</li>
+            <li><strong>Account & Email Data:</strong> Retained while your account is active and removed after confirmed account deletion (except data required by law)</li>
+            <li><strong>Confirmation/Deletion Tokens:</strong> One-time tokens that are cleared/invalidated after use</li>
             <li><strong>Analytics Data:</strong> Retained by Amplitude for up to 2 years, then automatically deleted</li>
             <li><strong>Crash Reports:</strong> Retained for 90 days, then automatically deleted</li>
         </ul>
@@ -307,8 +342,8 @@
         <ul>
             <li><strong>Access:</strong> View all data stored in the app at any time</li>
             <li><strong>Export:</strong> Export your data (available in app settings)</li>
-            <li><strong>Delete:</strong> Delete specific events, memories, or all your data</li>
-            <li><strong>Opt-out:</strong> Disable analytics in app settings</li>
+            <li><strong>Delete local content:</strong> Delete specific events, memories, or all local app content</li>
+            <li><strong>Delete account:</strong> Initiate permanent server-side account deletion in-app (Settings → Account → Request Account Deletion)</li>
             <li><strong>Request Information:</strong> Contact us about your data (see contact info below)</li>
         </ul>
 
@@ -316,7 +351,7 @@
         <p>We take security seriously:</p>
         <ul>
             <li><strong>Local Storage:</strong> Your data is stored securely on your device using iOS/Android built-in security</li>
-            <li><strong>No Cloud Storage:</strong> We don't store your personal data on our servers, so there's no risk of a data breach on our end</li>
+            <li><strong>Scoped Server Storage:</strong> Only limited account/email data is stored server-side for account features</li>
             <li><strong>Encrypted Connections:</strong> All communications with analytics services use HTTPS encryption</li>
             <li><strong>Minimal Data Collection:</strong> We only collect what's necessary to improve the app</li>
         </ul>
@@ -337,8 +372,8 @@
         <ul>
             <li>We use Apple Push Notification Service (APNS) for iOS and Firebase Cloud Messaging (FCM) for Android</li>
             <li>A unique device token is generated to send you notifications</li>
-            <li>This token is stored locally on your device</li>
-            <li>Notification content is generated locally on your device based on your events</li>
+            <li>Push token metadata may be stored server-side to deliver reminders and account-related notifications</li>
+            <li>Notification scheduling for your personal event reminders is configured from app data on your device</li>
             <li>You can disable notifications anytime in your device settings</li>
         </ul>
 
